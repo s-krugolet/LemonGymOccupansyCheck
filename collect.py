@@ -42,7 +42,9 @@ def fetch():
     })
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode("utf-8"))
-    return parse(data.get("content", ""))
+    # Раньше HTML лежал в data["content"], теперь сайт отдаёт его в data["data"]["content"]
+    content = data.get("content") or (data.get("data") or {}).get("content", "")
+    return parse(content)
 
 
 def parse(content):
