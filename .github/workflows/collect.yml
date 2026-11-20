@@ -16,8 +16,8 @@ jobs:                              # ЧТО делать
   collect:
     runs-on: ubuntu-latest         # временная машина с Linux
     steps:
-      - uses: actions/checkout@v4          # 1. скачать код репозитория на машину
-      - uses: actions/setup-python@v5      # 2. установить Python
+      - uses: actions/checkout@v5          # 1. скачать код репозитория на машину
+      - uses: actions/setup-python@v6      # 2. установить Python
         with:
           python-version: "3.12"
       - run: python collect.py             # 3. сделать замер и дописать строки в CSV
