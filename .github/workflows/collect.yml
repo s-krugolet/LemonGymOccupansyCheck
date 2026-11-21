@@ -1,8 +1,6 @@
 name: collect-occupancy            # имя, которое видно во вкладке Actions
 
 on:                                # КОГДА запускать
-  schedule:
-    - cron: "*/30 * * * *"         # каждые 30 минут (для приватного репо; для публичного можно */10)
   workflow_dispatch:               # плюс кнопка «Run workflow» для ручного запуска
 
 permissions:
