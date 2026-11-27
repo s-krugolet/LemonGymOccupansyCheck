@@ -24,5 +24,7 @@ python3 collect.py --loop 300          # каждые 5 минут
 pip install pandas matplotlib
 python3 analyze.py                       # список клубов
 python3 analyze.py --club Imanta --hours 7-22
+./heatmap.sh                             # карты «день × час» для всех клубов (сам ставит pandas/matplotlib в .venv)
+./heatmap.sh jugla 7-22                  # один клуб (часть названия), часы 7–22
 ```
 Выводит самые свободные получасовые слоты, лучший слот на каждый день недели и сохраняет тепловую карту `heatmap_<клуб>.png`.

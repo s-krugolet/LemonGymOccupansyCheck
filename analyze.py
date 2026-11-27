@@ -25,7 +25,7 @@ def main():
     ap.add_argument("--csv", default=os.path.join(HERE, "data", "occupancy.csv"))
     ap.add_argument("--club", help="часть названия клуба (без него — список клубов)")
     ap.add_argument("--slot", type=int, default=30, help="размер слота, минут (по умолчанию 30)")
-    ap.add_argument("--hours", default="6-23", help="рассматриваемые часы, напр. 7-22")
+    ap.add_argument("--hours", default="0-24", help="часы, напр. 7-22 (по умолчанию все, за которые есть данные)")
     ap.add_argument("--top", type=int, default=10)
     a = ap.parse_args()
 
@@ -44,7 +44,7 @@ def main():
 
     h0, h1 = map(int, a.hours.split("-"))
     t = d["timestamp"]
-    d["dow"] = t.dt.dayofweek
+    d["dow"] = t.dt.day_of_week
     d["slot"] = (t.dt.hour * 60 + t.dt.minute) // a.slot * a.slot
     d = d[(t.dt.hour >= h0) & (t.dt.hour < h1)]
 
@@ -75,7 +75,7 @@ def main():
                    vmax=max(60, float(pd.Series(pivot.values.ravel()).max(skipna=True) or 60)))
     ax.set_xticks(range(7), DAYS)
     ax.set_yticks(range(len(pivot)), [f"{m//60:02d}:{m%60:02d}" for m in pivot.index])
-    for (i, j), v in pd.DataFrame(pivot.values).stack().items():
+    for (i, j), v in pd.DataFrame(pivot.values).stack().dropna().items():
         ax.text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=7)
     ax.set_title(f"Lemon Gym {club}: средняя загрузка, %")
     fig.colorbar(im, ax=ax, shrink=.6)
